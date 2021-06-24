@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <h1>
+        {% block title %}Dashboard{% endblock %}
+    </h1>
+    {% if g.user %}
+        <a class="action" href="{{ 'new_project' }}">New Project</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% for project in projects %}
+        <article class="projects">
+            <header>
+                <div>
+                    <h1>{{ project['project_name'] }}</h1>
+                </div>
+                <a class="action" href="{{ url_for('update_project', project_id=project['id']) }}">Edit</a>
+                <a class="action" action="{{ return(render_template('expense_summary.html', project['id'])) }}">Expenses</a>
+                <a class="action" href="{{ url_for('new_expense', project_id=project['id']) }}">New Expense</a>
+            </header>
+            <p class="description">{{ project['project_description'] }}</p>
+        </article>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

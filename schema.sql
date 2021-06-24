@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS expenses;
+
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  hash TEXT NOT NULL
+);
+
+CREATE TABLE projects (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  project_name TEXT NOT NULL,
+  project_description TEXT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user (id)
+);
+
+CREATE TABLE expenses (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  project_id INTEGER NOT NULL,
+  expense_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expense_amount TEXT NOT NULL,
+  expense_description TEXT NOT NULL,
+  receipt TEXT NOT NULL,
+  FOREIGN KEY (project_id) REFERENCES projects (id)
+);

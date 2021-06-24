@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <h1>
+        {% block title %}Expenses{% endblock %}
+    </h1>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('new_expense', project_id=[project_id]) }}">New Expense</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% for expense in expenses %}
+        <article class="expense">
+            <header>
+                <div>
+                    <h1>{{ expense['expense_description'] }}</h1>
+                    <div class="amount">for
+                        {{expense['expense_amount'] }}
+                        on
+                        {{ expense['expense_date'] }}</div>
+                </div>
+                <a class="action" href="{{ url_for('update_expense', expense_id=expense['id']) }}">Edit</a>
+            </header>
+            <img src="{{  expense['receipt'] }}" alt="Image of receipt">
+        </article>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

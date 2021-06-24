@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block header %}
+    <h1>
+        {% block title %}New Expense{% endblock %}
+    </h1>
+{% endblock %}
+
+{% block content %}
+    <!-- TODO fix expense creation and file upload -->
+    <form method="post" enctype="multipart/form-data">
+        <label for="expense_description">Expense Description</label>
+        <input type="text" name="expense_description" id="expense_description" value="{{ request.form['expense_description'] }}" required="required">
+        <label for="expense_amount">Amount</label>
+        <input type="text" name="expense_amount" id="expense_amount">{{ request.form['expense_amount'] }}</input>
+        <label for="expense_date">Date of expense</label>
+        <input type="date" name="expense_date" value="">
+        <label for="file">Upload Receipt</label>
+        <input type="file" name="file">
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
