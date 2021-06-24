@@ -212,7 +212,7 @@ def get_expenses(project_id):
     return expenses
 
 
-@ app.route('/expense_summary')
+@ app.route('/<int:expense_id>/expense_summary')
 @login_required
 def expense_summary(project_id):
     expenses = get_expenses(project_id)

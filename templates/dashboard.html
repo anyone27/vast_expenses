@@ -17,7 +17,7 @@
                     <h1>{{ project['project_name'] }}</h1>
                 </div>
                 <a class="action" href="{{ url_for('update_project', project_id=project['id']) }}">Edit</a>
-                <a class="action" action="{{ return(render_template('expense_summary.html', project['id'])) }}">Expenses</a>
+                <a class="action" action="{{ url_for('expense_summary', project['id']) }}">Expenses</a>
                 <a class="action" href="{{ url_for('new_expense', project_id=project['id']) }}">New Expense</a>
             </header>
             <p class="description">{{ project['project_description'] }}</p>
