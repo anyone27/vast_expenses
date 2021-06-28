@@ -121,7 +121,7 @@ def index():
     else:
         db = get_db()
         projects = db.execute(
-            'SELECT p.id, project_name, project_description, user_id, username FROM projects p JOIN users u ON p.user_id = u.id ORDER BY p.id').fetchall()
+            'SELECT projects.id, project_name, project_description, user_id FROM projects WHERE user_id = ?', [session['user_id']]).fetchall()
         return render_template('dashboard.html', projects=projects)
 
 # projects function
