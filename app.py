@@ -216,6 +216,8 @@ def get_expenses(project_id):
 @login_required
 def expense_summary(project_id):
     expenses = get_expenses(project_id)
+    # file = expenses['receipt']
+    # path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     return render_template('expense_summary.html', project_id=project_id, expenses=expenses)
 
 
@@ -299,7 +301,7 @@ def upload_file(file_upload):
         return 'there is no file in form'
     file = file_upload
     filename = secure_filename(file.filename)
-    with open(filename, 'rb') as file:
-        receipt = file.read()
+    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(path)
 
-    return receipt
+    return filename
