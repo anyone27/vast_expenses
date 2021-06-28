@@ -212,7 +212,7 @@ def get_expenses(project_id):
     return expenses
 
 
-@ app.route('/<int:expense_id>/expense_summary')
+@ app.route('/<int:project_id>/expense_summary')
 @login_required
 def expense_summary(project_id):
     expenses = get_expenses(project_id)
@@ -299,7 +299,7 @@ def upload_file(file_upload):
         return 'there is no file in form'
     file = file_upload
     filename = secure_filename(file.filename)
-    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(path)
+    with open(filename, 'rb') as file:
+        receipt = file.read()
 
-    return path
+    return receipt
