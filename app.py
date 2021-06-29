@@ -119,10 +119,15 @@ def index():
     if g.user is None:
         return render_template('index.html')
     else:
+        Sum_of_expenses = {}
         db = get_db()
         projects = db.execute(
             'SELECT projects.id, project_name, project_description, user_id FROM projects WHERE user_id = ?', [session['user_id']]).fetchall()
-        return render_template('dashboard.html', projects=projects)
+        for project in projects:
+            x = db.execute(
+                'SELECT total(expense_amount) FROM expenses WHERE project_id = ?', [project['id']],).fetchone()
+            Sum_of_expenses[project['id']] = x['total(expense_amount)']
+        return render_template('dashboard.html', projects=projects, Sum_of_expenses=Sum_of_expenses)
 
 # projects function
 
@@ -286,7 +291,7 @@ def update_expense(expense_id):
                     description, amount, date, receipt, expense_id)
             )
             db.commit()
-            return redirect(url_for('expense_summary', project_id))
+            return redirect(url_for('expense_summary', project_id=project_id))
 
     return render_template('update_expense.html', expenses=expenses)
 
@@ -316,7 +321,8 @@ def upload_file(file_upload):
         return 'there is no file in form'
     file = file_upload
     filename = secure_filename(file.filename)
-    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-    file.save(path)
+    path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    if not os.path.exists(path):
+        file.save(path)
 
     return filename
