@@ -21,6 +21,8 @@
                 <a class="action" href="{{ url_for('new_expense', project_id=project['id']) }}">New Expense</a>
             </header>
             <p class="description">{{ project['project_description'] }}</p>
+            <p class="Sum_of_expenses">Total expenses: £{{ Sum_of_expenses[project['id']] }}
+            </p>
         </article>
         {% if not loop.last %}
             <hr>
