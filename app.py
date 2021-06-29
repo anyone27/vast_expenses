@@ -284,7 +284,11 @@ def update_expense(expense_id):
 @login_required
 def delete_expense(expense_id):
     db = get_db()
+    path = db.execute(
+        'SELECT receipt FROM expenses WHERE id = ?', (expense_id))
     db.execute('DELETE FROM expenses WHERE id = ?', (expense_id,))
+    if os.path.exists(path):
+        os.remove(path)
     db.commit()
     return redirect('/')
 
