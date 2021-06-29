@@ -195,6 +195,15 @@ def update_project(project_id):
 def delete_project(project_id):
     get_project(project_id)
     db = get_db()
+
+    # look up and delete all images associated with expenses in the project
+    expenses = db.execute(
+        'SELECT receipt FROM expenses WHERE project_id = ?', (project_id,)).fetchall()
+    for expense in expenses:
+        receipt = './static/uploads/' + expense['receipt']
+        if os.path.exists(receipt):
+            os.remove(receipt)
+
     db.execute('DELETE FROM projects WHERE id = ?', (project_id,))
     db.commit()
     return redirect('/')
@@ -286,11 +295,13 @@ def update_expense(expense_id):
 @login_required
 def delete_expense(expense_id):
     db = get_db()
-    # receipt = db.execute(
-    #     'SELECT receipt FROM expenses WHERE id = ?', (expense_id))
+    expense = db.execute(
+        'SELECT receipt FROM expenses WHERE id = ?', (expense_id,)).fetchone()
+    receipt = './static/uploads/' + expense['receipt']
+    if os.path.exists(receipt):
+        os.remove(receipt)
     db.execute('DELETE FROM expenses WHERE id = ?', (expense_id,))
-    # if os.path.exists(receipt):
-    #     os.remove(receipt)
+
     db.commit()
     return redirect('/')
 
