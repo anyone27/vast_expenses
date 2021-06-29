@@ -9,20 +9,33 @@
     {% endif %}
 {% endblock %}
 
+<div>
+    {% if g.user %}
+        <span>Welcome,
+            {{ g.user['username'] }}</span>
+    {% else %}
+        <span>Welcome, please Register or Login to continue.</span>
+    {% endif %}
+</div>
+
 {% block content %}
     {% for expense in expenses %}
         <article class="expense">
-            <header>
-                <div>
-                    <h1>{{ expense['expense_description'] }}</h1>
-                    <div class="amount">for £
-                        {{expense['expense_amount'] }}
-                        on
-                        {{ expense['expense_date'] }}</div>
-                </div>
-                <a class="action" href="{{ url_for('update_expense', expense_id=expense['id']) }}">Edit</a>
-            </header>
-            <img src="{{  '/static/uploads/' + expense['receipt'] }}" alt="Image of receipt" width="500">
+            <div class="col">
+                <header>
+                    <div>
+                        <h1>{{ expense['expense_description'] }}</h1>
+                        <div class="amount">for £
+                            {{expense['expense_amount'] }}
+                            on
+                            {{ expense['expense_date'] }}</div>
+                    </div>
+                    <a class="action" href="{{ url_for('update_expense', expense_id=expense['id']) }}">Edit</a>
+                </header>
+            </div>
+            <div class="col">
+                <img src="{{  '/static/uploads/' + expense['receipt'] }}" alt="Image of receipt" width="500">
+            </div>
         </article>
         {% if not loop.last %}
             <hr>

@@ -7,16 +7,35 @@
 {% endblock %}
 
 {% block content %}
-    <!-- TODO fix expense creation and file upload -->
-    <form method="post" enctype="multipart/form-data">
-        <label for="expense_description">Expense Description</label>
-        <input type="text" name="expense_description" id="expense_description" value="{{ request.form['expense_description'] }}" required="required">
-        <label for="expense_amount">Amount</label>
-        <input type="text" name="expense_amount" id="expense_amount">{{ request.form['expense_amount'] }}</input>
-        <label for="expense_date">Date of expense</label>
-        <input type="date" name="expense_date" value="">
-        <label for="file">Upload Receipt</label>
-        <input type="file" name="file">
-        <input type="submit" value="Save">
-    </form>
-{% endblock %}
+    <div class="container">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-sm">
+                    <label for="expense_description">Expense Description</label>
+                    <input type="text" name="expense_description" id="expense_description" value="{{ request.form['expense_description'] }}" required="required">
+                </div>
+                <div class="col-sm">
+                    <label for="expense_amount">Amount</label>
+                    <input type="text" name="expense_amount" id="expense_amount">{{ request.form['expense_amount'] }}</input>
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <label for="expense_date">Date of expense</label>
+                    </div>
+                    <div>
+                        <input type="date" name="expense_date" value="">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-8">
+                    <label for="file">Upload Receipt</label>
+                    <input type="file" name="file">
+                </div>
+                <div class="col-sm-4">
+                    <input type="submit" value="Save">
+                </div>
+            </div>
+        </form>
+    {% endblock %}

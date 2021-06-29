@@ -242,11 +242,7 @@ def new_expense(project_id):
         description = request.form['expense_description']
         amount = request.form['expense_amount']
         date = request.form['expense_date']
-        # TODO check allowed file extensions
-        # if allowed_file(request.files['file']):
         receipt = upload_file(request.files['file'])
-        # elif not allowed_file(request.files['file']):
-        #     error = 'This file type is not allowed. Allowed filetypes: PDF, PNG, JPG, JPEG'
         projects = get_project(project_id)
         error = None
 
