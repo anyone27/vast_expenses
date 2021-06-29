@@ -22,7 +22,7 @@
                 </div>
                 <a class="action" href="{{ url_for('update_expense', expense_id=expense['id']) }}">Edit</a>
             </header>
-            <img src="{{  expense['receipt'] }}" alt="Image of receipt">
+            <img src="{{  '/static/uploads/' + expense['receipt'] }}" alt="Image of receipt" width="500">
         </article>
         {% if not loop.last %}
             <hr>

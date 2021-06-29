@@ -121,7 +121,7 @@ def index():
     else:
         db = get_db()
         projects = db.execute(
-            'SELECT p.id, project_name, project_description, user_id, username FROM projects p JOIN users u ON p.user_id = u.id ORDER BY p.id').fetchall()
+            'SELECT projects.id, project_name, project_description, user_id FROM projects WHERE user_id = ?', [session['user_id']]).fetchall()
         return render_template('dashboard.html', projects=projects)
 
 # projects function
@@ -195,6 +195,15 @@ def update_project(project_id):
 def delete_project(project_id):
     get_project(project_id)
     db = get_db()
+
+    # look up and delete all images associated with expenses in the project
+    expenses = db.execute(
+        'SELECT receipt FROM expenses WHERE project_id = ?', (project_id,)).fetchall()
+    for expense in expenses:
+        receipt = './static/uploads/' + expense['receipt']
+        if os.path.exists(receipt):
+            os.remove(receipt)
+
     db.execute('DELETE FROM projects WHERE id = ?', (project_id,))
     db.commit()
     return redirect('/')
@@ -216,6 +225,8 @@ def get_expenses(project_id):
 @login_required
 def expense_summary(project_id):
     expenses = get_expenses(project_id)
+    # file = expenses['receipt']
+    # path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     return render_template('expense_summary.html', project_id=project_id, expenses=expenses)
 
 
@@ -284,11 +295,13 @@ def update_expense(expense_id):
 @login_required
 def delete_expense(expense_id):
     db = get_db()
-    path = db.execute(
-        'SELECT receipt FROM expenses WHERE id = ?', (expense_id))
+    expense = db.execute(
+        'SELECT receipt FROM expenses WHERE id = ?', (expense_id,)).fetchone()
+    receipt = './static/uploads/' + expense['receipt']
+    if os.path.exists(receipt):
+        os.remove(receipt)
     db.execute('DELETE FROM expenses WHERE id = ?', (expense_id,))
-    if os.path.exists(path):
-        os.remove(path)
+
     db.commit()
     return redirect('/')
 
@@ -303,7 +316,7 @@ def upload_file(file_upload):
         return 'there is no file in form'
     file = file_upload
     filename = secure_filename(file.filename)
-    with open(filename, 'rb') as file:
-        receipt = file.read()
+    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(path)
 
-    return receipt
+    return filename
