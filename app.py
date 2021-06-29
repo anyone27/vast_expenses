@@ -121,7 +121,7 @@ def index():
     else:
         db = get_db()
         projects = db.execute(
-            'SELECT p.id, project_name, project_description, user_id, username FROM projects p JOIN users u ON p.user_id = u.id ORDER BY p.id').fetchall()
+            'SELECT projects.id, project_name, project_description, user_id FROM projects WHERE user_id = ?', [session['user_id']]).fetchall()
         return render_template('dashboard.html', projects=projects)
 
 # projects function
@@ -216,6 +216,8 @@ def get_expenses(project_id):
 @login_required
 def expense_summary(project_id):
     expenses = get_expenses(project_id)
+    # file = expenses['receipt']
+    # path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     return render_template('expense_summary.html', project_id=project_id, expenses=expenses)
 
 
@@ -284,7 +286,11 @@ def update_expense(expense_id):
 @login_required
 def delete_expense(expense_id):
     db = get_db()
+    # receipt = db.execute(
+    #     'SELECT receipt FROM expenses WHERE id = ?', (expense_id))
     db.execute('DELETE FROM expenses WHERE id = ?', (expense_id,))
+    # if os.path.exists(receipt):
+    #     os.remove(receipt)
     db.commit()
     return redirect('/')
 
@@ -299,7 +305,7 @@ def upload_file(file_upload):
         return 'there is no file in form'
     file = file_upload
     filename = secure_filename(file.filename)
-    with open(filename, 'rb') as file:
-        receipt = file.read()
+    path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+    file.save(path)
 
-    return receipt
+    return filename
