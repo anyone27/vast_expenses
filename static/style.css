@@ -16,8 +16,19 @@ body {
     border-radius: 25px;
 }
 
+.website-border {
+    border: 2px solid darkgreen;
+    border-radius: 15px;
+    padding: 1rem;
+}
+
 h1 {
-    font-family: serif;
+    font-weight: bold;
+    color: #377ba8;
+    margin: 1rem 0;
+}
+
+h2 {
     color: #377ba8;
     margin: 1rem 0;
 }

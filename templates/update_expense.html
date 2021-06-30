@@ -7,19 +7,45 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        <label for="expense_description">Expense Description</label>
-        <input type="text" name="expense_description" id="expense_description" value="{{ request.form['expense_description'] or expenses['expense_description'] }}" required="required">
-        <label for="expense_amount">Expense Amount</label>
-        <input type="text" name="expense_amount" id="expense_amount" value="{{ request.form['expense_amount'] or expenses['expense_amount'] }}"></input>
-        <input type="submit" value="Save">
-        <label for="expense_date">Date of expense</label>
-        <input type="date" name="expense_date" value="request.form['expense_date'] or expenses['expense_date']">
-        <label for="file">Upload Receipt</label>
-        <input type="file" name="file" value="request.file['file'] or expenses['receipt']">
-    </form>
-    <hr>
-    <form action="{{ url_for('delete_expense', expense_id=expenses['id']) }}" method="post">
-        <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-    </form>
+    <div class="container website-border">
+        <form method="post" enctype="multipart/form-data">
+
+            <div class="row">
+                <div class="col-sm">
+                    <label for="expense_description">Expense Description</label>
+                    <input type="text" name="expense_description" id="expense_description" value="{{ request.form['expense_description'] or expenses['expense_description'] }}" required="required">
+                </div>
+
+                <div class="col-sm">
+                    <label for="expense_amount">Expense Amount</label>
+                    <input type="text" name="expense_amount" id="expense_amount" value="{{ request.form['expense_amount'] or expenses['expense_amount'] }}"></input>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="expense_date">Date of expense</label>
+                    <input type="date" name="expense_date" value="request.form['expense_date'] or expenses['expense_date']">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm">
+                    <label for="file">Upload Receipt</label>
+                    <input type="file" name="file" value="request.file['file'] or expenses['receipt']">
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm">
+                    <input type="submit" value="Save">
+                </div>
+            </form>
+
+            <div class="col-sm">
+                <form action="{{ url_for('delete_expense', expense_id=expenses['id']) }}" method="post">
+                    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+                </form>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

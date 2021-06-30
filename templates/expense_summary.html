@@ -20,11 +20,11 @@
 
 {% block content %}
     {% for expense in expenses %}
-        <article class="expense">
+        <article class="expense website-border">
             <div class="col">
                 <header>
                     <div>
-                        <h1>{{ expense['expense_description'] }}</h1>
+                        <h2>{{ expense['expense_description'] }}</h2>
                         <div class="amount">for £
                             {{expense['expense_amount'] }}
                             on
@@ -33,8 +33,8 @@
                     <a class="action" href="{{ url_for('update_expense', expense_id=expense['id']) }}">Edit</a>
                 </header>
             </div>
-            <div class="col">
-                <img src="{{  '/static/uploads/' + expense['receipt'] }}" alt="Image of receipt" width="500">
+            <div class="col-2">
+                <img src="{{  '/static/uploads/' + expense['receipt'] }}" alt="Image of receipt" width="500%">
             </div>
         </article>
         {% if not loop.last %}

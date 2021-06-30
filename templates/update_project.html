@@ -7,15 +7,34 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        <label for="project_name">Project Name</label>
-        <input type="text" name="project_name" id="project_name" value="{{ request.form['project_name'] or projects['project_name'] }}" required="required">
-        <label for="project_description">Project Description</label>
-        <textarea name="project_description" id="project_description">{{ request.form['project_description'] or projects['project_description'] }}</textarea>
-        <input type="submit" value="Save">
-    </form>
-    <hr>
-    <form action="{{ url_for('delete_project', project_id=projects['id']) }}" method="post">
-        <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure? This will delete all expenses associated with this project');">
-    </form>
-{% endblock %}
+    <div class="container website-border">
+        <form method="post">
+            <div class="row">
+
+                <div class="col-sm">
+                    <label for="project_name">Project Name</label>
+                    <input type="text" name="project_name" id="project_name" value="{{ request.form['project_name'] or projects['project_name'] }}" required="required">
+                </div>
+
+                <div class="col-sm">
+                    <label for="project_description">Project Description</label>
+                    <textarea name="project_description" id="project_description">{{ request.form['project_description'] or projects['project_description'] }}</textarea>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div class="col-sm">
+                    <input type="submit" value="Save">
+                </form>
+            </div>
+
+            <div class="col-sm">
+                <form action="{{ url_for('delete_project', project_id=projects['id']) }}" method="post">
+                    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure? This will delete all expenses associated with this project');">
+                </form>
+            </div>
+
+        </div>
+    {% endblock %}
