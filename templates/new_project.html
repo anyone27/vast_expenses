@@ -7,11 +7,25 @@
 {% endblock %}
 
 {% block content %}
-    <form method="post">
-        <label for="project_name">Project Name</label>
-        <input type="text" name="project_name" id="project_name" value="{{ request.form['project_name'] }}" required="required">
-        <label for="project_description">Project Description</label>
-        <textarea name="project_description" id="project_description">{{ request.form['project_description'] }}</textarea>
-        <input type="submit" value="Save">
-    </form>
+    <div class="container website-border">
+        <form method="post">
+            <div class="row">
+                <div class="col-sm">
+                    <label for="project_name">Project Name</label>
+                    <input type="text" name="project_name" id="project_name" value="{{ request.form['project_name'] }}" required="required">
+                </div>
+                <div class="col-sm">
+                    <label for="project_description">Project Description</label>
+                    <textarea name="project_description" id="project_description">{{ request.form['project_description'] }}</textarea>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-4">
+                    <input type="submit" value="Save">
+                </div>
+            </div>
+
+        </form>
+    </div>
 {% endblock %}

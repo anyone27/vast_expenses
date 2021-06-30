@@ -7,11 +7,28 @@ html {
 body {
     max-width: 960px;
     margin: 0 auto;
-    background: white;
+    background: #CCD6C5;
+    padding: 2rem;
+    border-radius: 25px;
+}
+
+.rounded-corners {
+    border-radius: 25px;
+}
+
+.website-border {
+    border: 2px solid darkgreen;
+    border-radius: 15px;
+    padding: 1rem;
 }
 
 h1 {
-    font-family: serif;
+    font-weight: bold;
+    color: #377ba8;
+    margin: 1rem 0;
+}
+
+h2 {
     color: #377ba8;
     margin: 1rem 0;
 }
